@@ -23,6 +23,19 @@ $workers = [];
 if (file_exists($workersFile)) {
     $workers = json_decode(file_get_contents($workersFile), true);
 }
+
+// Function to group logs by month
+function groupLogsByMonth($logs) {
+    $groupedLogs = [];
+    foreach ($logs as $log) {
+        $month = date('Y-m', strtotime($log['time']));
+        if (!isset($groupedLogs[$month])) {
+            $groupedLogs[$month] = [];
+        }
+        $groupedLogs[$month][] = $log;
+    }
+    return $groupedLogs;
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,40 +52,27 @@ if (file_exists($workersFile)) {
     <?php if (empty($workers)) : ?>
         <p class="no-records">No hay trabajadores registrados.</p>
     <?php else : ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>Número de Trabajador</th>
-                    <th>Nombre</th>
-                    <th>Registros (Entrada/Salida)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($workers as $worker) : ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($worker['worker_number']); ?></td>
-                        <td><?php echo htmlspecialchars($worker['worker_name']); ?></td>
-                        <td>
-                            <?php if (empty($worker['logs'])) : ?>
-                                <span class="no-records">No hay registros.</span>
-                            <?php else : ?>
-                                <ul>
-                                    <?php foreach ($worker['logs'] as $log) : ?>
-                                        <li>
-                                            <?php echo htmlspecialchars($log['type'] === 'in' ? 'Entrada' : 'Salida'); ?>
-                                            a las <?php echo htmlspecialchars($log['time']); ?>
-                                            <?php if (isset($log['hours_worked'])) : ?>
-                                                (<?php echo htmlspecialchars($log['hours_worked']); ?>)
-                                            <?php endif; ?>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <pre>
+Nombre,Legajo,Día,Hora Entrada,Hora Salida
+<?php foreach ($workers as $worker) : ?>
+    <?php if (!empty($worker['logs'])) : ?>
+        <?php $groupedLogs = groupLogsByMonth($worker['logs']); ?>
+        <?php foreach ($groupedLogs as $month => $logs) : ?>
+            <?php foreach ($logs as $log) : ?>
+                <?php if ($log['type'] === 'in') : ?>
+                    <?php $inTime = $log['time']; ?>
+                <?php else : ?>
+                    <?php $outTime = $log['time']; ?>
+                    <?php $day = date('Y-m-d', strtotime($inTime)); ?>
+                    <?php $inHour = date('H:i:s', strtotime($inTime)); ?>
+                    <?php $outHour = date('H:i:s', strtotime($outTime)); ?>
+                    <?php echo htmlspecialchars($worker['worker_name']) . ',' . htmlspecialchars($worker['worker_number']) . ',' . $day . ',' . $inHour . ',' . $outHour . "\n"; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
+        </pre>
     <?php endif; ?>
 
     <p><a href="index.php">Volver a la página de entrada/salida</a></p>
