@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Horario Laboral</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <h1>Control de Horario Laboral</h1>
+    <form action="../src/check.php" method="POST">
+        <label for="workerNumber5">Número de Trabajador (5 cifras):</label>
+        <input type="number" id="workerNumber5" name="workerNumber5" required minlength="5" maxlength="5" pattern="\d{5}">
+        
+        <label for="workerNumber3">Número de Trabajador (3 cifras):</label>
+        <input type="number" id="workerNumber3" name="workerNumber3" required minlength="3" maxlength="3" pattern="\d{3}">
+        
+        <label for="workerPassword">Contraseña (3 dígitos):</label>
+        <input type="number" id="workerPassword" name="workerPassword" required minlength="3" maxlength="3" pattern="\d{3}">
+        
+        <button type="submit">Registrar Horario</button>
+    </form>
+    <form action="../src/register.php" method="POST">
+        <h2>Registrar Nuevo Trabajador</h2>
+        <label for="newWorkerNumber">Número de Trabajador:</label>
+        <input type="number" id="newWorkerNumber" name="newWorkerNumber" required>
+        
+        <button type="submit">Registrar Trabajador</button>
+    </form>
+</body>
+</html>
