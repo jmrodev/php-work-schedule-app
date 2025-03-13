@@ -61,21 +61,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Entrada/Salida</title>
+    <title>Entrada/Salida</title>
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
-    <h1>Control de Entrada/Salida</h1>
+    <h1>Entrada/Salida</h1>
     <form method="POST" action="">
-        <label for="worker_number">Número de trabajador (5 dígitos):</label>
+        <label for="worker_number">Legajo</label>
+        <span>(5 dígitos):</span>
+        
         <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
         
-        <label for="worker_password">Contraseña (3 dígitos):</label>
+        <label for="worker_password">Contraseña</label>
+        <span>(3 dígitos):</span>
         <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
         
         <button type="submit">Marcar Entrada/Salida</button>
     </form>
 
-    <p><a href="register.php">Ir a la página de registro</a></p>
+    <p><a href="register.php">Panel de control</a></p>
 </body>
 </html>

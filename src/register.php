@@ -71,15 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
-    <h1>Registro de Trabajadores</h1>
+    <h1>Nuevo personal</h1>
     <form method="POST" action="">
-        <label for="worker_number">Número de trabajador (5 dígitos):</label>
+        <label for="worker_number">Número de legajo:</label>
         <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
         
-        <label for="worker_name">Nombre del trabajador:</label>
+        <label for="worker_name">Nombre:</label>
         <input type="text" id="worker_name" name="worker_name" required>
         
-        <label for="worker_password">Contraseña (3 dígitos):</label>
+        <label for="worker_password">Contraseña :</label>
+        <span>(3 dígitos ultimos del DNI)</span>
         <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
         
         <button type="submit">Registrar Trabajador</button>
