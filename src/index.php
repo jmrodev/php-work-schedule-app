@@ -4,7 +4,6 @@ session_start();
 // Ruta al archivo JSON
 $workersFile = __DIR__ . '/workers.json';
 
-// Cargar trabajadores existentes
 $workers = [];
 if (file_exists($workersFile)) {
     $workers = json_decode(file_get_contents($workersFile), true);
@@ -65,20 +64,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
-    <h1>Entrada/Salida</h1>
-    <form method="POST" action="">
-        <label for="worker_number">Legajo</label>
-        <span>(5 dígitos):</span>
-        
-        <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
-        
-        <label for="worker_password">Contraseña</label>
-        <span>(3 dígitos):</span>
-        <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
-        
-        <button type="submit">Marcar Entrada/Salida</button>
-    </form>
-
-    <p><a href="register.php">Panel de control</a></p>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../public/admin.html">Acceso de Administrador</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Entrada/Salida</h1>
+        <form method="POST" action="">
+            <label for="worker_number">Legajo</label>
+            <span>(5 dígitos):</span>
+            
+            <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
+            
+            <label for="worker_password">Contraseña</label>
+            <span>(3 dígitos):</span>
+            <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
+            
+            <button type="submit">Aceptar</button>
+        </form>
+    </main>
 </body>
 </html>

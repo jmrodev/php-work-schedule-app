@@ -18,7 +18,6 @@ $_SESSION['last_activity'] = time(); // Update last activity time
 // Ruta al archivo JSON
 $workersFile = __DIR__ . '/workers.json';
 
-// Cargar trabajadores existentes
 $workers = [];
 if (file_exists($workersFile)) {
     $workers = json_decode(file_get_contents($workersFile), true);
@@ -74,111 +73,125 @@ function getWeekOfMonth($date) {
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
+ 
+<p><a href="index.php">Volver a la página de entrada/salida</a></p>
+            <p><a href="register.php">Ir a la página de registro</a></p>
+
+            <form method="POST" action="logout.php">
+                <button type="submit">Logout</button>
+            </form>
     <h1>Registros</h1>
 
-    <form id="form-filter" method="GET" action="">
-        <span>Mostrar por mes:</span>
-        <div class="checkbox-group" id="months">
-            <?php for ($i = 1; $i <= 12; $i++) : ?>
-                <input type="checkbox" id="month<?php echo $i; ?>" name="months[]" value="<?php echo $i; ?>" <?php if (in_array($i, $filters['months'])) echo 'checked'; ?>>
-                <label for="month<?php echo $i; ?>"><?php echo $i; ?></label>
-            <?php endfor; ?>
-        </div>
-        <span>Mostrar por trabajador:</span>
-        <div class="checkbox-group" id="workers">
-            <?php foreach ($workers as $worker) : ?>
-                <input type="checkbox" id="worker<?php echo $worker['worker_number']; ?>" name="workers[]" value="<?php echo $worker['worker_number']; ?>" <?php if (in_array($worker['worker_number'], $filters['workers'])) echo 'checked'; ?>>
-                <label for="worker<?php echo $worker['worker_number']; ?>"><?php echo htmlspecialchars($worker['worker_name']); ?></label>
-            <?php endforeach; ?>
-        </div>
-        <span>Mostrar por semana:</span>
-        <div class="checkbox-group" id="weeks">
-            <?php for ($i = 1; $i <= 4; $i++) : ?>
-                <input type="checkbox" id="week<?php echo $i; ?>" name="weeks[]" value="<?php echo $i; ?>" <?php if (in_array($i, $filters['weeks'])) echo 'checked'; ?>>
-                <label for="week<?php echo $i; ?>">Semana <?php echo $i; ?></label>
-            <?php endfor; ?>
-            <input type="checkbox" id="weekRest" name="weeks[]" value="rest" <?php if (in_array('rest', $filters['weeks'])) echo 'checked'; ?>>
-            <label for="weekRest">Resto</label>
-        </div>
-        <button type="submit">Filtrar</button>
-    </form>
-
-    <?php if (empty($workers)) : ?>
-        <p class="no-records">No hay trabajadores registrados.</p>
-    <?php else : ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Legajo</th>
-                    <th>Día</th>
-                    <th>Hora Entrada</th>
-                    <th>Hora Salida</th>
-                    <th>Horas Trabajadas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $logCount = 0;
-                foreach ($workers as $worker) :
-                    if (!empty($worker['logs']) && (empty($filters['workers']) || in_array($worker['worker_number'], $filters['workers']))) :
-                        $groupedLogs = groupLogsByMonth($worker['logs']);
-                        foreach ($groupedLogs as $month => $logs) :
-                            $monthNumber = (int)date('m', strtotime($month));
-                            if (empty($filters['months']) || in_array($monthNumber, $filters['months'])) :
-                                foreach ($logs as $log) :
-                                    $weekOfMonth = getWeekOfMonth($log['time']);
-                                    if (empty($filters['weeks']) || in_array($weekOfMonth, $filters['weeks']) || (in_array('rest', $filters['weeks']) && $weekOfMonth > 4)) :
-                                        if ($logCount >= $startIndex && $logCount < $endIndex) :
-                                            if ($log['type'] === 'in') :
-                                                $inTime = $log['time'];
-                                            else :
-                                                $outTime = $log['time'];
-                                                $day = date('Y-m-d', strtotime($inTime));
-                                                $inHour = date('H:i:s', strtotime($inTime));
-                                                $outHour = date('H:i:s', strtotime($outTime));
-                                                $hoursWorked = $log['hours_worked'] ?? '';
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo htmlspecialchars($worker['worker_name']); ?></td>
-                                                    <td><?php echo htmlspecialchars($worker['worker_number']); ?></td>
-                                                    <td><?php echo $day; ?></td>
-                                                    <td><?php echo $inHour; ?></td>
-                                                    <td><?php echo $outHour; ?></td>
-                                                    <td><?php echo $hoursWorked; ?></td>
-                                                </tr>
-                                                <?php
+    <div class="container">
+        <aside>
+            <form id="form-filter" method="GET" action="">
+                <span>Mostrar por mes:</span>
+                <div class="checkbox-group" id="months">
+                    <?php for ($i = 1; $i <= 12; $i++) : ?>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="month<?php echo $i; ?>" name="months[]" value="<?php echo $i; ?>" <?php if (in_array($i, $filters['months'])) echo 'checked'; ?>>
+                            <label for="month<?php echo $i; ?>"><?php echo $i; ?></label>
+                        </div>
+                    <?php endfor; ?>
+                </div>
+                <span>Mostrar por trabajador:</span>
+                <div class="checkbox-group" id="workers">
+                    <?php foreach ($workers as $worker) : ?>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="worker<?php echo $worker['worker_number']; ?>" name="workers[]" value="<?php echo $worker['worker_number']; ?>" <?php if (in_array($worker['worker_number'], $filters['workers'])) echo 'checked'; ?>>
+                            <label for="worker<?php echo $worker['worker_number']; ?>"><?php echo htmlspecialchars($worker['worker_name']); ?></label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <span>Mostrar por semana:</span>
+                <div class="checkbox-group" id="weeks">
+                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="week<?php echo $i; ?>" name="weeks[]" value="<?php echo $i; ?>" <?php if (in_array($i, $filters['weeks'])) echo 'checked'; ?>>
+                            <label for="week<?php echo $i; ?>">Semana <?php echo $i; ?></label>
+                        </div>
+                    <?php endfor; ?>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="weekRest" name="weeks[]" value="rest" <?php if (in_array('rest', $filters['weeks'])) echo 'checked'; ?>>
+                        <label for="weekRest">Resto</label>
+                    </div>
+                </div>
+                <button type="submit">Filtrar</button>
+            </form>
+        </aside>
+        <main>
+            <?php if (empty($workers)) : ?>
+                <p class="no-records">No hay personal registrado.</p>
+            <?php else : ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Legajo</th>
+                            <th>Día</th>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Horas Trabajadas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $logCount = 0;
+                        foreach ($workers as $worker) :
+                            if (!empty($worker['logs']) && (empty($filters['workers']) || in_array($worker['worker_number'], $filters['workers']))) :
+                                $groupedLogs = groupLogsByMonth($worker['logs']);
+                                foreach ($groupedLogs as $month => $logs) :
+                                    $monthNumber = (int)date('m', strtotime($month));
+                                    if (empty($filters['months']) || in_array($monthNumber, $filters['months'])) :
+                                        foreach ($logs as $log) :
+                                            $weekOfMonth = getWeekOfMonth($log['time']);
+                                            if (empty($filters['weeks']) || in_array($weekOfMonth, $filters['weeks']) || (in_array('rest', $filters['weeks']) && $weekOfMonth > 4)) :
+                                                if ($logCount >= $startIndex && $logCount < $endIndex) :
+                                                    if ($log['type'] === 'in') :
+                                                        $inTime = $log['time'];
+                                                    elseif (isset($inTime)) : // Ensure $inTime is set before using it
+                                                        $outTime = $log['time'];
+                                                        $day = date('Y-m-d', strtotime($inTime));
+                                                        $inHour = date('H:i:s', strtotime($inTime));
+                                                        $outHour = date('H:i:s', strtotime($outTime));
+                                                        $hoursWorked = $log['hours_worked'] ?? '';
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo htmlspecialchars($worker['worker_name']); ?></td>
+                                                            <td><?php echo htmlspecialchars($worker['worker_number']); ?></td>
+                                                            <td><?php echo $day; ?></td>
+                                                            <td><?php echo $inHour; ?></td>
+                                                            <td><?php echo $outHour; ?></td>
+                                                            <td><?php echo $hoursWorked; ?></td>
+                                                        </tr>
+                                                        <?php
+                                                    endif;
+                                                endif;
+                                                $logCount++;
                                             endif;
-                                        endif;
-                                        $logCount++;
+                                        endforeach;
                                     endif;
                                 endforeach;
                             endif;
                         endforeach;
-                    endif;
-                endforeach;
-                ?>
-            </tbody>
-        </table>
+                        ?>
+                    </tbody>
+                </table>
 
-        <div class="pagination">
-            <?php if ($currentPage > 1) : ?>
-                <a href="?page=<?php echo $currentPage - 1; ?>&<?php echo http_build_query(['months' => $filters['months'], 'workers' => $filters['workers'], 'weeks' => $filters['weeks']]); ?>">&laquo; Anterior</a>
+                <div class="pagination">
+                    <?php if ($currentPage > 1) : ?>
+                        <a href="?page=<?php echo $currentPage - 1; ?>&<?php echo http_build_query(['months' => $filters['months'], 'workers' => $filters['workers'], 'weeks' => $filters['weeks']]); ?>">&laquo; Anterior</a>
+                    <?php endif; ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                        <a href="?page=<?php echo $i; ?>&<?php echo http_build_query(['months' => $filters['months'], 'workers' => $filters['workers'], 'weeks' => $filters['weeks']]); ?>" <?php if ($i == $currentPage) echo 'class="active"'; ?>><?php echo $i; ?></a>
+                    <?php endfor; ?>
+                    <?php if ($currentPage < $totalPages) : ?>
+                        <a href="?page=<?php echo $currentPage + 1; ?>&<?php echo http_build_query(['months' => $filters['months'], 'workers' => $filters['workers'], 'weeks' => $filters['weeks']]); ?>">Siguiente &raquo;</a>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
-            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                <a href="?page=<?php echo $i; ?>&<?php echo http_build_query(['months' => $filters['months'], 'workers' => $filters['workers'], 'weeks' => $filters['weeks']]); ?>" <?php if ($i == $currentPage) echo 'class="active"'; ?>><?php echo $i; ?></a>
-            <?php endfor; ?>
-            <?php if ($currentPage < $totalPages) : ?>
-                <a href="?page=<?php echo $currentPage + 1; ?>&<?php echo http_build_query(['months' => $filters['months'], 'workers' => $filters['workers'], 'weeks' => $filters['weeks']]); ?>">Siguiente &raquo;</a>
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
 
-    <p><a href="index.php">Volver a la página de entrada/salida</a></p>
-    <p><a href="register.php">Ir a la página de registro</a></p>
-
-    <form method="POST" action="logout.php">
-        <button type="submit">Logout</button>
-    </form>
+        </main>
+    </div>
 </body>
 </html>

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $workersFile = '../workers.json';
     if (!file_exists($workersFile)) {
-        echo "No hay trabajadores registrados.";
+        echo "No hay personal registrado.";
         exit;
     }
 
