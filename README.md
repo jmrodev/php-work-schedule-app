@@ -33,16 +33,13 @@ php-work-schedule-app
    ```
    cd php-work-schedule-app
    ```
-3. Install dependencies using Composer:
-   ```
-   composer install
-   ```
 
 ## Usage
 
 1. Open `public/index.html` in your web browser.
-2. Use the form to register new workers or to clock in/out existing workers.
-3. The application will handle the logic of recording entry and exit times based on the provided employee numbers.
+2. Use the form to clock in/out existing workers.
+3. To register new workers, open `public/register.html` in your web browser.
+4. The application will handle the logic of recording entry and exit times based on the provided employee numbers.
 
 ## Contributing
 

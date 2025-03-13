@@ -1,26 +1,3 @@
 [
-   {
-        "worker_number": "12345",
-        "worker_name": "susana",
-        "logs": [
-            {
-                "type": "in",
-                "time": "2025-03-12 23:15:31"
-            },
-            {
-                "type": "out",
-                "time": "2025-03-12 23:15:35",
-                "hours_worked": "0 horas 0 minutos"
-            },
-            {
-                "type": "in",
-                "time": "2025-03-12 23:15:43"
-            },
-            {
-                "type": "out",
-                "time": "2025-03-12 23:17:05",
-                "hours_worked": "0 horas 1 minutos"
-            }
-        ]
-    }
+
 ]

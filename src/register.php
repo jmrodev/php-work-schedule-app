@@ -1,6 +1,20 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
+    header('Location: ../public/index.html');
+    exit;
+}
+
+// Check for session timeout (3 minutes)
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 180)) {
+    session_unset();
+    session_destroy();
+    header('Location: ../public/index.html');
+    exit;
+}
+$_SESSION['last_activity'] = time(); // Update last activity time
+
 // Ruta al archivo JSON
 $workersFile = __DIR__ . '/workers.json';
 
@@ -72,7 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <p><a href="index.php">Ir a la página de entrada/salida</a></p>
-    <p><a href="records.php">Ir a la página de registros</a></p>
-
+    <p><a href="records.php">Lista de asistencia</a></p>
+    <form method="POST" action="logout.php">
+        <button type="submit">Logout</button>
+    </form>
 </body>
 </html>

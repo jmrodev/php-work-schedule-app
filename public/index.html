@@ -7,25 +7,18 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <h1>Control de Horario Laboral</h1>
-    <form action="../src/check.php" method="POST">
-        <label for="workerNumber5">Número de Trabajador (5 cifras):</label>
-        <input type="number" id="workerNumber5" name="workerNumber5" required minlength="5" maxlength="5" pattern="\d{5}">
+
+    <h2>Acceso de Administrador</h2>
+    <form action="../src/admin_login.php" method="POST">
+        <label for="admin_user">Usuario:</label>
+        <input type="text" id="admin_user" name="admin_user" required>
         
-        <label for="workerNumber3">Número de Trabajador (3 cifras):</label>
-        <input type="number" id="workerNumber3" name="workerNumber3" required minlength="3" maxlength="3" pattern="\d{3}">
+        <label for="admin_password">Contraseña:</label>
+        <input type="password" id="admin_password" name="admin_password" required>
         
-        <label for="workerPassword">Contraseña (3 dígitos):</label>
-        <input type="number" id="workerPassword" name="workerPassword" required minlength="3" maxlength="3" pattern="\d{3}">
-        
-        <button type="submit">Registrar Horario</button>
+        <button type="submit">Ingresar</button>
     </form>
-    <form action="../src/register.php" method="POST">
-        <h2>Registrar Nuevo Trabajador</h2>
-        <label for="newWorkerNumber">Número de Trabajador:</label>
-        <input type="number" id="newWorkerNumber" name="newWorkerNumber" required>
-        
-        <button type="submit">Registrar Trabajador</button>
-    </form>
+    <p><a href="../src/index.php">Ir a la página de entrada/salida</a></p>
+
 </body>
 </html>

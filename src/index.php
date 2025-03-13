@@ -13,13 +13,14 @@ if (file_exists($workersFile)) {
 // Procesar el formulario de entrada/salida
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $workerNumber = $_POST['worker_number'] ?? '';
+    $workerPassword = $_POST['worker_password'] ?? '';
 
-    // Validar el número de trabajador (5 dígitos)
-    if (preg_match('/^\d{5}$/', $workerNumber)) {
+    // Validar el número de trabajador (5 dígitos) y la contraseña (3 dígitos)
+    if (preg_match('/^\d{5}$/', $workerNumber) && preg_match('/^\d{3}$/', $workerPassword)) {
         $workerFound = false;
 
         foreach ($workers as &$worker) {
-            if ($worker['worker_number'] === $workerNumber) {
+            if ($worker['worker_number'] === $workerNumber && isset($worker['worker_password']) && $worker['worker_password'] === $workerPassword) {
                 $workerFound = true;
                 $currentTime = date('Y-m-d H:i:s');
 
@@ -47,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (!$workerFound) {
-            echo "Trabajador no encontrado.";
+            echo "Número de trabajador o contraseña incorrectos.";
         }
     } else {
-        echo "Número de trabajador inválido.";
+        echo "Número de trabajador o contraseña inválidos.";
     }
 }
 ?>
@@ -68,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST" action="">
         <label for="worker_number">Número de trabajador (5 dígitos):</label>
         <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
+        
+        <label for="worker_password">Contraseña (3 dígitos):</label>
+        <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
         
         <button type="submit">Marcar Entrada/Salida</button>
     </form>
