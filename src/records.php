@@ -49,6 +49,11 @@ $totalPages = ceil($totalLogs / $logsPerPage);
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $startIndex = ($currentPage - 1) * $logsPerPage;
 $endIndex = $startIndex + $logsPerPage;
+
+// Get filters from request
+$filters = [
+    'months' => $_GET['months'] ?? [],
+];
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +66,17 @@ $endIndex = $startIndex + $logsPerPage;
 </head>
 <body>
     <h1>Registros de Trabajadores</h1>
+
+    <form id="form-filter" method="GET" action="">
+        <label>Mostrar por mes:</label>
+        <div class="checkbox-group" id="months"> 
+            <?php for ($i = 1; $i <= 12; $i++) : ?>
+                <input type="checkbox" id="month<?php echo $i; ?>" name="months[]" value="<?php echo $i; ?>" <?php if (in_array($i, $filters['months'])) echo 'checked'; ?>>
+                <label for="month<?php echo $i; ?>"><?php echo $i; ?></label>
+            <?php endfor; ?>
+        </div>
+        <button type="submit">Filtrar</button>
+    </form>
 
     <?php if (empty($workers)) : ?>
         <p class="no-records">No hay trabajadores registrados.</p>
@@ -83,30 +99,33 @@ $endIndex = $startIndex + $logsPerPage;
                     if (!empty($worker['logs'])) :
                         $groupedLogs = groupLogsByMonth($worker['logs']);
                         foreach ($groupedLogs as $month => $logs) :
-                            foreach ($logs as $log) :
-                                if ($logCount >= $startIndex && $logCount < $endIndex) :
-                                    if ($log['type'] === 'in') :
-                                        $inTime = $log['time'];
-                                    else :
-                                        $outTime = $log['time'];
-                                        $day = date('Y-m-d', strtotime($inTime));
-                                        $inHour = date('H:i:s', strtotime($inTime));
-                                        $outHour = date('H:i:s', strtotime($outTime));
-                                        $hoursWorked = $log['hours_worked'] ?? '';
-                                        ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($worker['worker_name']); ?></td>
-                                            <td><?php echo htmlspecialchars($worker['worker_number']); ?></td>
-                                            <td><?php echo $day; ?></td>
-                                            <td><?php echo $inHour; ?></td>
-                                            <td><?php echo $outHour; ?></td>
-                                            <td><?php echo $hoursWorked; ?></td>
-                                        </tr>
-                                        <?php
+                            $monthNumber = (int)date('m', strtotime($month));
+                            if (empty($filters['months']) || in_array($monthNumber, $filters['months'])) :
+                                foreach ($logs as $log) :
+                                    if ($logCount >= $startIndex && $logCount < $endIndex) :
+                                        if ($log['type'] === 'in') :
+                                            $inTime = $log['time'];
+                                        else :
+                                            $outTime = $log['time'];
+                                            $day = date('Y-m-d', strtotime($inTime));
+                                            $inHour = date('H:i:s', strtotime($inTime));
+                                            $outHour = date('H:i:s', strtotime($outTime));
+                                            $hoursWorked = $log['hours_worked'] ?? '';
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($worker['worker_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($worker['worker_number']); ?></td>
+                                                <td><?php echo $day; ?></td>
+                                                <td><?php echo $inHour; ?></td>
+                                                <td><?php echo $outHour; ?></td>
+                                                <td><?php echo $hoursWorked; ?></td>
+                                            </tr>
+                                            <?php
+                                        endif;
                                     endif;
-                                endif;
-                                $logCount++;
-                            endforeach;
+                                    $logCount++;
+                                endforeach;
+                            endif;
                         endforeach;
                     endif;
                 endforeach;
@@ -116,13 +135,13 @@ $endIndex = $startIndex + $logsPerPage;
 
         <div class="pagination">
             <?php if ($currentPage > 1) : ?>
-                <a href="?page=<?php echo $currentPage - 1; ?>">&laquo; Anterior</a>
+                <a href="?page=<?php echo $currentPage - 1; ?>&<?php echo http_build_query(['months' => $filters['months']]); ?>">&laquo; Anterior</a>
             <?php endif; ?>
             <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                <a href="?page=<?php echo $i; ?>" <?php if ($i == $currentPage) echo 'class="active"'; ?>><?php echo $i; ?></a>
+                <a href="?page=<?php echo $i; ?>&<?php echo http_build_query(['months' => $filters['months']]); ?>" <?php if ($i == $currentPage) echo 'class="active"'; ?>><?php echo $i; ?></a>
             <?php endfor; ?>
             <?php if ($currentPage < $totalPages) : ?>
-                <a href="?page=<?php echo $currentPage + 1; ?>">Siguiente &raquo;</a>
+                <a href="?page=<?php echo $currentPage + 1; ?>&<?php echo http_build_query(['months' => $filters['months']]); ?>">Siguiente &raquo;</a>
             <?php endif; ?>
         </div>
     <?php endif; ?>
