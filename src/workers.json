@@ -1,3 +1,70 @@
 [
-   
+    {
+        "worker_number": "01234",
+        "worker_name": "susana",
+        "worker_password": "123",
+        "date_of_birth": "1997-02-13",
+        "cell_phone": "2494523258",
+        "address": "salta 654",
+        "position": "maestra",
+        "is_teacher": true,
+        "room_in_charge": "sala 3-4",
+        "work_schedule": {
+            "Lunes": {
+                "start": "08:36",
+                "end": "00:33"
+            },
+            "Martes": {
+                "start": "08:36",
+                "end": "00:33"
+            },
+            "Mi\u00e9rcoles": {
+                "start": "08:36",
+                "end": "00:33"
+            },
+            "Jueves": {
+                "start": "08:36",
+                "end": "00:33"
+            },
+            "Viernes": {
+                "start": "08:36",
+                "end": "00:33"
+            }
+        },
+        "logs": []
+    },
+    {
+        "worker_number": "12345",
+        "worker_name": "susan",
+        "worker_password": "122",
+        "date_of_birth": "1975-08-02",
+        "cell_phone": "2494523258",
+        "address": "salta 654",
+        "position": "maestra",
+        "is_teacher": true,
+        "room_in_charge": "sala 3-4",
+        "work_schedule": {
+            "Lunes": {
+                "start": "08:33",
+                "end": "00:34"
+            },
+            "Martes": {
+                "start": "08:33",
+                "end": "00:34"
+            },
+            "Mi\u00e9rcoles": {
+                "start": "08:33",
+                "end": "00:34"
+            },
+            "Jueves": {
+                "start": "08:33",
+                "end": "00:34"
+            },
+            "Viernes": {
+                "start": "08:33",
+                "end": "00:34"
+            }
+        },
+        "logs": []
+    }
 ]

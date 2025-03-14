@@ -114,10 +114,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_worker'])) {
         <nav>
             <ul>
                 <li><a href="../public/index.html">Entrada/Salida</a></li>
-                <li><a href="register.php">Registro</a></li>
                 <li><a href="../public/admin.html">Acceso de Administrador</a></li>
                 <li><a href="workers.php">Listado del personal</a></li>
                 <li><a href="logout.php">Logout</a></li>
+                <li><a href="records.php">Asistencia</a></li>
             </ul>
         </nav>
     </header>
