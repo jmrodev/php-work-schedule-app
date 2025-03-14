@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $workerNumber3 = $_POST['workerNumber3'];
     $workerPassword = $_POST['workerPassword'];
 
-    if (empty($workerNumber5) || empty($workerNumber3) || empty($workerPassword) || !is_numeric($workerNumber5) || !is_numeric($workerNumber3) || !is_numeric($workerPassword)) {
+    if (empty($workerNumber5) || empty($workerNumber3) || empty($workerPassword)) {
         echo "Números de trabajador o contraseña inválidos.";
         exit;
     }
@@ -18,6 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $workers = json_decode(file_get_contents($workersFile), true);
+    if (!is_array($workers)) {
+        $workers = [];
+    }
+
     $workerNumber = $workerNumber5 . $workerNumber3;
     $currentTime = date('Y-m-d H:i:s');
 

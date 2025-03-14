@@ -64,13 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../public/admin.html">Acceso de Administrador</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'header.php'; ?>
     <main>
         <h1>Entrada/Salida</h1>
         <form method="POST" action="">

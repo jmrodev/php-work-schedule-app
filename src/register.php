@@ -110,17 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_worker'])) {
     </script>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../public/index.html">Entrada/Salida</a></li>
-                <li><a href="../public/admin.html">Acceso de Administrador</a></li>
-                <li><a href="workers.php">Listado del personal</a></li>
-                <li><a href="logout.php">Logout</a></li>
-                <li><a href="records.php">Asistencia</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'header.php'; ?>
     <main>
         <h1>Ingreso de datos</h1>
         <form method="POST" action="">

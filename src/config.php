@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
-    header('Location: ../public/index.html');
+    header('Location: ../public/admin.html');
     exit;
 }
 
@@ -10,10 +10,28 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 180)) {
     session_unset();
     session_destroy();
-    header('Location: ../public/index.html');
+    header('Location: ../public/admin.html');
     exit;
 }
 $_SESSION['last_activity'] = time(); // Update last activity time
+
+// Ruta al archivo JSON
+$workersFile = __DIR__ . '/workers.json';
+
+// Cargar trabajadores existentes
+$workers = [];
+if (file_exists($workersFile)) {
+    $workers = json_decode(file_get_contents($workersFile), true);
+    if (!is_array($workers)) {
+        $workers = [];
+    }
+}
+
+// Your existing code that uses $workers
+// For example:
+foreach ($workers as $worker) {
+    // Process each worker
+}
 
 // Ruta al archivo JSON
 $holidaysFile = __DIR__ . '/holidays.json';
@@ -47,16 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_holiday'])) {
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../public/index.html">Entrada/Salida</a></li>
-                <li><a href="register.php">Registro</a></li>
-                <li><a href="../public/admin.html">Acceso de Administrador</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+    
+    <?php include 'header.php'; ?>
     <main>
         <h1>Configuración de Feriados</h1>
         <form method="POST" action="">

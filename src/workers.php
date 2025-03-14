@@ -33,16 +33,8 @@ if (file_exists($workersFile)) {
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../public/index.html">Entrada/Salida</a></li>
-                <li><a href="register.php">Registro</a></li>
-                <li><a href="../public/admin.html">Acceso de Administrador</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php include 'header.php'; ?>
+
     <main>
         <h1>Lista del personal</h1>
         <?php if (empty($workers)) : ?>
