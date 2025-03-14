@@ -57,12 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrada/Salida</title>
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
+
 <body>
     <?php include 'header.php'; ?>
     <main>
@@ -70,15 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" action="">
             <label for="worker_number">Legajo</label>
             <span>(5 dígitos):</span>
-            
+
             <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
-            
+
             <label for="worker_password">Contraseña</label>
             <span>(3 dígitos):</span>
             <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
-            
+
             <button type="submit">Aceptar</button>
         </form>
     </main>
 </body>
+
 </html>

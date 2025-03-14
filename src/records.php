@@ -24,7 +24,8 @@ if (file_exists($workersFile)) {
 }
 
 // Function to group logs by month
-function groupLogsByMonth($logs) {
+function groupLogsByMonth($logs)
+{
     $groupedLogs = [];
     foreach ($logs as $log) {
         $month = date('Y-m', strtotime($log['time']));
@@ -57,7 +58,8 @@ $filters = [
 ];
 
 // Function to determine the week of the month
-function getWeekOfMonth($date) {
+function getWeekOfMonth($date)
+{
     $firstOfMonth = strtotime(date('Y-m-01', strtotime($date)));
     $dayOfMonth = date('j', strtotime($date));
     return ceil(($dayOfMonth + date('w', $firstOfMonth)) / 7);
@@ -66,12 +68,14 @@ function getWeekOfMonth($date) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registros</title>
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
+
 <body>
     <?php include 'header.php'; ?>
     <main>
@@ -150,7 +154,7 @@ function getWeekOfMonth($date) {
                                                             $inHour = date('H:i:s', strtotime($inTime));
                                                             $outHour = date('H:i:s', strtotime($outTime));
                                                             $hoursWorked = $log['hours_worked'] ?? '';
-                                                            ?>
+                            ?>
                                                             <tr>
                                                                 <td><?php echo htmlspecialchars($worker['worker_name']); ?></td>
                                                                 <td><?php echo htmlspecialchars($worker['worker_number']); ?></td>
@@ -159,7 +163,7 @@ function getWeekOfMonth($date) {
                                                                 <td><?php echo $outHour; ?></td>
                                                                 <td><?php echo $hoursWorked; ?></td>
                                                             </tr>
-                                                            <?php
+                            <?php
                                                         endif;
                                                     endif;
                                                     $logCount++;
@@ -190,4 +194,5 @@ function getWeekOfMonth($date) {
         </div>
     </main>
 </body>
+
 </html>

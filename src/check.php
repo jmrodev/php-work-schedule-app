@@ -47,4 +47,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo "Trabajador no encontrado o contraseña incorrecta.";
 }
-?>

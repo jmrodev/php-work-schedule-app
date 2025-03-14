@@ -26,14 +26,16 @@ if (file_exists($workersFile)) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista del personal</title>
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
+
 <body>
-<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main>
         <h1>Lista del personal</h1>
@@ -72,4 +74,5 @@ if (file_exists($workersFile)) {
         <?php endif; ?>
     </main>
 </body>
+
 </html>

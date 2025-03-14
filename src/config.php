@@ -58,21 +58,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_holiday'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración de Feriados</title>
     <link rel="stylesheet" href="../public/styles.css"> <!-- Estilos CSS -->
 </head>
+
 <body>
-    
+
     <?php include 'header.php'; ?>
     <main>
         <h1>Configuración de Feriados</h1>
         <form method="POST" action="">
             <label for="holiday_date">Fecha de feriado:</label>
             <input type="date" id="holiday_date" name="holiday_date" required>
-            
+
             <button type="submit" name="add_holiday">Agregar Feriado</button>
         </form>
 
@@ -95,4 +97,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_holiday'])) {
         </div>
     </main>
 </body>
+
 </html>

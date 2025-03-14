@@ -84,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_worker'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_worker'])) {
         }
     </script>
 </head>
+
 <body>
     <?php include 'header.php'; ?>
     <main>
@@ -116,34 +118,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_worker'])) {
         <form method="POST" action="">
             <label for="worker_number">Número de legajo:</label>
             <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
-            
+
             <label for="worker_name">Nombre:</label>
             <input type="text" id="worker_name" name="worker_name" required>
-            
+
             <label for="worker_password">Contraseña :</label>
             <span>(3 dígitos ultimos del DNI)</span>
             <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
-            
+
             <label for="date_of_birth">Fecha de Nacimiento:</label>
             <input type="date" id="date_of_birth" name="date_of_birth">
-            
+
             <label for="cell_phone">Teléfono Celular:</label>
             <input type="text" id="cell_phone" name="cell_phone">
-            
+
             <label for="address">Dirección:</label>
             <input type="text" id="address" name="address">
-            
+
             <label for="position">Cargo:</label>
             <input type="text" id="position" name="position">
-            
+
             <label for="is_teacher">¿Es maestra?</label>
             <input type="checkbox" id="is_teacher" name="is_teacher" onclick="toggleRoomInCharge()">
-            
+
             <div id="room_in_charge_field" style="display: none;">
                 <label for="room_in_charge">Sala a cargo:</label>
                 <input type="text" id="room_in_charge" name="room_in_charge">
             </div>
-            
+
             <label>Horario de trabajo:</label>
             <table>
                 <thead>
@@ -168,9 +170,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register_worker'])) {
                     ?>
                 </tbody>
             </table>
-            
+
             <button type="submit" name="register_worker">Registrar</button>
         </form>
     </main>
 </body>
+
 </html>
