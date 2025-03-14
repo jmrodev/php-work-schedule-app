@@ -92,12 +92,21 @@ function getWeekOfMonth($date)
                                 <label for="month<?php echo $i; ?>"><?php echo $i; ?></label>
                             </div>
                         <?php endfor; ?>
+                        type="checkbox"
                     </div>
                     <span>Mostrar por trabajador:</span>
                     <div class="checkbox-group" id="workers">
                         <?php foreach ($workers as $worker) : ?>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="worker<?php echo $worker['worker_number']; ?>" name="workers[]" value="<?php echo $worker['worker_number']; ?>" <?php if (in_array($worker['worker_number'], $filters['workers'])) echo 'checked'; ?>>
+                                <input
+                                    type="checkbox"
+                                    id="worker<?php echo $worker['worker_number']; ?>"
+                                    name="workers[]"
+                                    value="<?php echo $worker['worker_number']; ?>"
+                                    <?php if (in_array(
+                                        $worker['worker_number'],
+                                        $filters['workers']
+                                    )) echo 'checked'; ?>>
                                 <label for="worker<?php echo $worker['worker_number']; ?>"><?php echo htmlspecialchars($worker['worker_name']); ?></label>
                             </div>
                         <?php endforeach; ?>
@@ -106,12 +115,23 @@ function getWeekOfMonth($date)
                     <div class="checkbox-group" id="weeks">
                         <?php for ($i = 1; $i <= 4; $i++) : ?>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="week<?php echo $i; ?>" name="weeks[]" value="<?php echo $i; ?>" <?php if (in_array($i, $filters['weeks'])) echo 'checked'; ?>>
-                                <label for="week<?php echo $i; ?>">Semana <?php echo $i; ?></label>
+                                <input
+                                    type="checkbox"
+                                    id="week<?php echo $i; ?>"
+                                    name="weeks[]"
+                                    value="<?php echo $i; ?>"
+                                    <?php if (in_array($i, $filters['weeks'])) echo 'checked'; ?>>
+                                <label
+                                    for="week<?php echo $i; ?>">Semana <?php echo $i; ?></label>
                             </div>
                         <?php endfor; ?>
                         <div class="checkbox-item">
-                            <input type="checkbox" id="weekRest" name="weeks[]" value="rest" <?php if (in_array('rest', $filters['weeks'])) echo 'checked'; ?>>
+                            <input
+                                type="checkbox"
+                                id="weekRest"
+                                name="weeks[]"
+                                value="rest"
+                                <?php if (in_array('rest', $filters['weeks'])) echo 'checked'; ?>>
                             <label for="weekRest">Resto</label>
                         </div>
                     </div>

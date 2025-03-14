@@ -66,18 +66,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
     <main>
         <h1>Entrada/Salida</h1>
         <form method="POST" action="">
             <label for="worker_number">Legajo</label>
             <span>(5 dígitos):</span>
 
-            <input type="text" id="worker_number" name="worker_number" required pattern="\d{5}" maxlength="5">
+            <input type="text" id="worker_number" name="worker_number" required pattern="\d{4,5}" minlength="4" maxlength="5">
 
             <label for="worker_password">Contraseña</label>
             <span>(3 dígitos):</span>
-            <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" maxlength="3">
+            <input type="text" id="worker_password" name="worker_password" required pattern="\d{3}" minlength="3" maxlength="3">
 
             <button type="submit">Aceptar</button>
         </form>
